@@ -7,7 +7,7 @@ namespace par {
 
 /// Executes the given computation in parallel over an integral range.
 template <typename Executor, typename T, size_t Dim, typename F>
-void for_each(Executor& executor, const range<T, Dim>& range, const F& f) {
+void for_each(Executor& executor, const Range<T, Dim>& range, const F& f) {
     if constexpr (Dim == 1)
         executor.for_each_1d(range, f);
     else if constexpr (Dim == 2)
