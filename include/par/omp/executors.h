@@ -39,12 +39,9 @@ struct StaticExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for reduction(Red: res)
         for (auto i = range.begin[0]; i < range.end[0]; ++i)
@@ -57,12 +54,9 @@ struct StaticExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for collapse(2) reduction(Red: res)
         for (auto j = range.begin[1]; j < range.end[1]; ++j) {
@@ -77,12 +71,9 @@ struct StaticExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for collapse(3) reduction(Red: res)
         for (auto k = range.begin[2]; k < range.end[2]; ++k) {
@@ -128,12 +119,9 @@ struct DynamicExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for reduction(Red: res) schedule(dynamic)
         for (auto i = range.begin[0]; i < range.end[0]; ++i)
@@ -146,12 +134,9 @@ struct DynamicExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for collapse(2) reduction(Red: res) schedule(dynamic)
         for (auto j = range.begin[1]; j < range.end[1]; ++j) {
@@ -166,12 +151,9 @@ struct DynamicExecutor final : Executor {
         struct Custom {
             U val;
             BinOp bin_op;
-
-            Custom(U val, const BinOp& bin_op) : val(val), bin_op(bin_op) {}
-            Custom(const Custom&) = default;
             void combine(const Custom& other) { val = bin_op(val, other.val); }
         };
-        Custom res(init, bin_op);
+        Custom res {init, bin_op};
         #pragma omp declare reduction(Red:Custom:omp_out.combine(omp_in)) initializer (omp_priv=omp_orig)
         #pragma omp parallel for collapse(3) reduction(Red: res) schedule(dynamic)
         for (auto k = range.begin[2]; k < range.end[2]; ++k) {
